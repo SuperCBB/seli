@@ -1,0 +1,19 @@
+.sprite-container {
+  margin: 20px 0;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sprite {
+  width: 110px;
+  height: auto;
+  image-rendering: pixelated;
+  animation: bounce 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-15px); }
+}
