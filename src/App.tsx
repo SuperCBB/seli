@@ -4,12 +4,16 @@ import SuccessCard from './components/SuccessCard';
 import { launchConfetti } from './utils/confetti';
 
 export default function App() {
-  const [accepted, setAccepted] = useState(false);
+  const [acceptedAt, setAcceptedAt] = useState<Date | null>(null);
 
   const handleAccept = () => {
     launchConfetti();
-    setAccepted(true);
+    setAcceptedAt(new Date()); // el momento exacto del "Sí"
   };
 
-  return accepted ? <SuccessCard /> : <ProposalCard onAccept={handleAccept} />;
+  return acceptedAt ? (
+    <SuccessCard acceptedAt={acceptedAt} />
+  ) : (
+    <ProposalCard onAccept={handleAccept} />
+  );
 }

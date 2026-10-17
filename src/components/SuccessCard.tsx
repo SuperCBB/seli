@@ -5,23 +5,20 @@ import { CONFIG } from '../config';
 
 const PHOTO_URL = `${import.meta.env.BASE_URL}${CONFIG.photo}`;
 
-// Se calcula una sola vez, fuera del render
-function sinceText(): string | null {
-  if (!CONFIG.sinceDate) return null;
-  const start = new Date(`${CONFIG.sinceDate}T00:00:00`);
-  if (Number.isNaN(start.getTime())) return null;
-  const days = Math.floor((Date.now() - start.getTime()) / 86_400_000);
-  const pretty = start.toLocaleDateString('es-ES', {
+function sinceText(date: Date): string {
+  const day = date.toLocaleDateString('es-ES', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   });
-  if (days <= 0) return `💜 Novios desde hoy, ${pretty}`;
-  return `💜 Novios desde el ${pretty} · ${days} ${days === 1 ? 'día' : 'días'} juntos`;
+  const time = date.toLocaleTimeString('es-ES', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  return `💜 Novios desde el ${day} a las ${time}`;
 }
-const SINCE = sinceText();
 
-export default function SuccessCard() {
+export default function SuccessCard({ acceptedAt }: { acceptedAt: Date }) {
   const [photoOk, setPhotoOk] = useState(true);
 
   // En esta pantalla sí se puede hacer scroll (la tarjeta puede ser alta en móvil)
@@ -56,7 +53,7 @@ export default function SuccessCard() {
 
       <p className="catchphrase">¡Qué tío! 😏</p>
 
-      {SINCE && <p className="since">{SINCE}</p>}
+      <p className="since">{sinceText(acceptedAt)}</p>
     </Card>
   );
 }
