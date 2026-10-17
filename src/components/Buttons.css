@@ -13,20 +13,24 @@
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .btn-yes {
+  --grow: 1;
   background-color: #7e57c2;
   color: white;
   box-shadow: 0 4px 15px rgba(126, 87, 194, 0.4);
+  transform: scale(var(--grow));
 }
 
 .btn-yes:hover {
-  transform: scale(1.1);
+  transform: scale(calc(var(--grow) * 1.08));
   background-color: #673ab7;
+}
+
+.btn-yes:active {
+  transform: scale(calc(var(--grow) * 0.95));
 }
 
 .btn-no-slot {
@@ -36,7 +40,7 @@
 .btn-no {
   background-color: #e0e0e0;
   color: #757575;
-  transition: none; /* el movimiento lo hace el requestAnimationFrame */
+  transition: none;
   will-change: transform;
   touch-action: none;
   user-select: none;
@@ -47,4 +51,30 @@
   left: 0;
   top: 0;
   z-index: 20;
+}
+
+.energy {
+  width: 70%;
+  height: 10px;
+  margin: 0 auto 6px;
+  background: #ede7f6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.energy-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffeb3b, #ffc107);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.pop {
+  animation: pop 0.35s ease-out;
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.85); opacity: 0; }
+  60%  { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
 }

@@ -7,13 +7,37 @@
 }
 
 .sprite {
-  width: 110px;
-  height: auto;
+  height: 110px;
+  width: auto;
   image-rendering: pixelated;
   animation: bounce 1.2s infinite alternate ease-in-out;
+}
+
+.sprite.evolve {
+  animation:
+    evolve 0.9s ease-out,
+    bounce 1.2s 0.9s infinite alternate ease-in-out;
 }
 
 @keyframes bounce {
   from { transform: translateY(0); }
   to   { transform: translateY(-15px); }
+}
+
+@keyframes evolve {
+  0%   { filter: brightness(10); transform: scale(0.5); }
+  50%  { filter: brightness(4);  transform: scale(1.35); }
+  100% { filter: brightness(1);  transform: scale(1); }
+}
+
+.sprite-container.shake {
+  animation: shake 0.45s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  20% { transform: translateX(-8px) rotate(-6deg); }
+  40% { transform: translateX(8px) rotate(6deg); }
+  60% { transform: translateX(-6px) rotate(-4deg); }
+  80% { transform: translateX(6px) rotate(4deg); }
 }

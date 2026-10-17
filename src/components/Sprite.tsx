@@ -1,17 +1,27 @@
 import './Sprite.css';
 
-const PICHU_SPRITE =
-  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/172.gif';
+// Sprites guardados en public/sprites (no dependen de ningún servidor externo)
+const spriteUrl = (id: number) =>
+  `${import.meta.env.BASE_URL}sprites/${id}.gif`;
 
-type Props = { alt: string; shakeKey?: number };
+type Props = {
+  alt: string;
+  pokemonId?: number; // 172 Pichu, 25 Pikachu, 26 Raichu
+  shakeKey?: number;  // cambia para sacudir al Pokémon
+  evolving?: boolean; // destello de evolución
+};
 
-export default function Sprite({ alt, shakeKey = 0 }: Props) {
+export default function Sprite({ alt, pokemonId = 172, shakeKey = 0, evolving = false }: Props) {
   return (
     <div
       key={shakeKey}
       className={`sprite-container${shakeKey > 0 ? ' shake' : ''}`}
     >
-      <img className="sprite" src={PICHU_SPRITE} alt={alt} />
+      <img
+        className={`sprite${evolving ? ' evolve' : ''}`}
+        src={spriteUrl(pokemonId)}
+        alt={alt}
+      />
     </div>
   );
 }

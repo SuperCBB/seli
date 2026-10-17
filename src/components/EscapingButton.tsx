@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
-const RADIUS = 160;        // ratón: distancia a la que empieza a huir
-const TOUCH_RADIUS = 130;  // táctil: distancia del toque que lo activa
+const RADIUS = 160;
+const TOUCH_RADIUS = 130;
 const PUSH = 1.4;
 const FRICTION = 0.88;
 const MARGIN = 12;
-const DASH_EASE = 0.14;    // suavidad del deslizamiento táctil (0.05 lento, 0.3 rápido)
-const DASH_MIN_DIST = 180; // distancia mínima que se aleja del dedo
+const DASH_EASE = 0.14;
+const DASH_MIN_DIST = 180;
 
 type Point = { x: number; y: number };
 
@@ -74,7 +74,6 @@ export default function EscapingButton({ children }: { children: ReactNode }) {
       const dist = Math.hypot(c.x - p.x, c.y - p.y);
 
       if (e.pointerType === 'touch') {
-        // Toque: el botón se desliza suavemente lejos del dedo
         if (e.type === 'pointerdown' && dist < TOUCH_RADIUS) {
           start();
           const w = btnRef.current?.offsetWidth ?? 80;
@@ -83,7 +82,7 @@ export default function EscapingButton({ children }: { children: ReactNode }) {
           vel.current = { x: 0, y: 0 };
         }
       } else if (dist < RADIUS) {
-        start(); // ratón: activa la física continua
+        start();
       }
     };
 
@@ -111,7 +110,6 @@ export default function EscapingButton({ children }: { children: ReactNode }) {
         const maxY = window.innerHeight - h - MARGIN;
 
         if (t) {
-          // Deslizamiento suave hacia el destino (táctil)
           p.x += (t.x - p.x) * DASH_EASE;
           p.y += (t.y - p.y) * DASH_EASE;
           if (Math.hypot(t.x - p.x, t.y - p.y) < 1) target.current = null;
